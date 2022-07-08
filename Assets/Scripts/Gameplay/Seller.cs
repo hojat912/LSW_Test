@@ -1,27 +1,28 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using Gameplay.Environment;
+using Gameplay.UI;
 using UnityEngine;
 
-[RequireComponent(typeof(IExecutable))]
-public class Seller : MonoBehaviour
+namespace Gameplay
 {
-    [SerializeField] private CharacterDialogue _characterDialogue;
-    [SerializeField] private string[] _dialogues;
-    private int _dialogueIndex;
-
-    private void Awake()
+    [RequireComponent(typeof(IExecutable))]
+    public class Seller : MonoBehaviour
     {
-        IExecutable executable = GetComponent<IExecutable>();
-        executable.SetAction(Speack);
+        [SerializeField] private CharacterDialogue _characterDialogue;
+        [SerializeField] private string[] _dialogues;
+        private int _dialogueIndex;
+
+        private void Awake()
+        {
+            IExecutable executable = GetComponent<IExecutable>();
+            executable.SetAction(Speack);
+        }
+
+        private void Speack()
+        {
+            _characterDialogue.SetData(_dialogues[_dialogueIndex]);
+            _dialogueIndex++;
+            _dialogueIndex %= _dialogues.Length;
+        }
     }
 
-    private void Speack()
-    {
-        _characterDialogue.SetData(_dialogues[_dialogueIndex]);
-        _dialogueIndex++;
-        _dialogueIndex %= _dialogues.Length;
-    }
 }
-

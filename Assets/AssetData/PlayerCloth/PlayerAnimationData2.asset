@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eac0d6dd747a74c88e57c1a372746e, type: 3}
+  m_Name: PlayerAnimationData2
+  m_EditorClassIdentifier: 
+  _id: 
+  _clothIcon: {fileID: 21300000, guid: 91d279551b31bd34595e463aa01ce7d6, type: 3}
+  _leftSprites:
+  - {fileID: -403228324, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 56768464, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: -1293190716, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  _rightSprites:
+  - {fileID: 157399462, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 711129386, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 32935849, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  _upSprites:
+  - {fileID: -1915940975, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: -1201844002, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 2115726576, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  _downSprites:
+  - {fileID: 1013656974, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 602347780, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  - {fileID: 322954427, guid: 578962cecb8978c4abfd13b053bd8e0e, type: 3}
+  _frameTime: 0.15
+  _frameCount: 5

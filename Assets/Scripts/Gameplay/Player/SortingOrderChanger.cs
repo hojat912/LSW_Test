@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SortingOrderChanger : MonoBehaviour
+namespace Gameplay.Player
 {
-    [SerializeField]
-    private int _targetSortingOrder;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class SortingOrderChanger : MonoBehaviour
     {
-        PlayerSpriteHandler player= collision.GetComponent<PlayerSpriteHandler>();
-        if (player)
+        [SerializeField]
+        private int _targetSortingOrder;
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            player.SetSortingOrder(_targetSortingOrder);
+            IPlayerSpriteHandler player = collision.GetComponent<IPlayerSpriteHandler>();
+            if (player != null)
+            {
+                player.SetSortingOrder(_targetSortingOrder);
+            }
         }
     }
 }

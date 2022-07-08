@@ -1,109 +1,65 @@
-using System;
+using EventSystem;
+using Gameplay.Player.Data;
+using Managment;
+using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerSpriteHandler : MonoBehaviour
+namespace Gameplay.Player
 {
-
-
-    [SerializeField]
-    private SpriteRenderer _playerSpriteRenderer;
-
-    [SerializeField]
-    private PlayerAnimationData _animatonData;
-
-    [SerializeField]
-    private float _horizontalSpeed;
-
-    [SerializeField]
-    private float _verticalSpeed;
-
-    [SerializeField]
-    private SpriteRenderer _mirrorSpriteRenderer;
-
-    private Transform _transform;
-
-    public void SetSortingOrder(int targetSortingOrder)
+    public class PlayerSpriteHandler : MonoBehaviour, IPlayerSpriteHandler
     {
-        _mirrorSpriteRenderer.sortingOrder = targetSortingOrder - 1;
-        _playerSpriteRenderer.sortingOrder = targetSortingOrder;
+        private IPlayerInput _playerInput;
+        private IEvent _event;
 
-    }
+        [SerializeField]
+        private PlayerClothData _defaultCloth;
 
-    private void Awake()
-    {
-        _transform = transform;
-        SetSprites(EDirection.Down);
-    }
+        [SerializeField]
+        private PlayerClothData _withoutCloth;
 
+        [SerializeField]
+        private SpriteRenderer _playerSpriteRenderer;
+        [SerializeField]
+        private SpriteRenderer _mirrorSpriteRenderer;
 
+        private List<PlayerClothData> _inventory;
+        private PlayerClothData _currentCloth;
 
-    void Update()
-    {
-        Vector3 currentPos = _transform.position;
-        Vector3 moveDirection = GetInputValue();
-        _transform.position = currentPos + moveDirection * Time.deltaTime;
-        EDirection direction= CalculateMoveDirection(moveDirection);
-        SetSprites(direction);
-    }
+        public List<PlayerClothData> Inventory => _inventory;
 
-    private void SetSprites(EDirection direction)
-    {
-        (Sprite playerSprite, Sprite mirrorSprite) = _animatonData.GetSprite(direction);
-        _playerSpriteRenderer.sprite = playerSprite;
-        _mirrorSpriteRenderer.sprite = mirrorSprite;
-    }
-
-    public void SetSpriteData(PlayerAnimationData newCloth)
-    {
-        _animatonData = newCloth;
-        SetSprites(EDirection.Down);
-    }
-
-    private Vector3 GetInputValue()
-    {
-        Vector3 moveDirection = Vector3.zero;
-
-        if (Input.GetKey(KeyCode.W))
+        private void Start()
         {
-            moveDirection.y += _verticalSpeed;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveDirection.y -= _verticalSpeed;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveDirection.x += _horizontalSpeed;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveDirection.x -= _horizontalSpeed;
+            _inventory = new List<PlayerClothData>();
+            _inventory.Add(_defaultCloth);
+            _inventory.Add(_withoutCloth);
+            _currentCloth = _defaultCloth;
+
+            _playerInput = GetComponent<IPlayerInput>();
+            _event = GameManager.ServiceLocator.GetService<IEvent>();
+            _event.ListenToEvent<PlayerClothData>(EEventType.SelectCloth, SelectCloth);
+            SetSprites(EDirection.Down);
+            _playerInput.OnInputChanged(SetSprites);
         }
 
-        return moveDirection;
-    }
+        public void SetSortingOrder(int targetSortingOrder)
+        {
+            _mirrorSpriteRenderer.sortingOrder = targetSortingOrder - 1;
+            _playerSpriteRenderer.sortingOrder = targetSortingOrder;
+        }
 
-    private EDirection CalculateMoveDirection(Vector3 moveDirection)
-    {
-        if (moveDirection.x > 0)
+        private void SetSprites(EDirection direction)
         {
-            return EDirection.Right;
+            (Sprite playerSprite, Sprite mirrorSprite) = _currentCloth.GetSprite(direction);
+            _playerSpriteRenderer.sprite = playerSprite;
+            _mirrorSpriteRenderer.sprite = mirrorSprite;
         }
-        else if (moveDirection.x < 0)
+
+        public void SelectCloth(PlayerClothData newCloth)
         {
-            return EDirection.Left;
+            _currentCloth = newCloth;
+            if (!_inventory.Contains(newCloth))
+                _inventory.Add(newCloth);
+            SetSprites(EDirection.Down);
         }
-        else if (moveDirection.y > 0)
-        {
-            return EDirection.Up;
-        }
-        else if (moveDirection.y < 0)
-        {
-            return EDirection.Down;
-        }
-        else
-        {
-            return EDirection.Idle;
-        }
+
     }
 }
