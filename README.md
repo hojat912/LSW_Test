@@ -12,6 +12,7 @@ The reason for the low quality of the art of this game is that I am not an artis
 
 This is my first experience in making top down games and I have only used the knowledge of my previous works.
 And I can learn about the tricks of making this style of game.
+I will be very grateful to anyone who helps me to improve this game
 
 You can download PC_Export.rar For PC
 
