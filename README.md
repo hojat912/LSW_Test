@@ -10,6 +10,9 @@ For this project I used some pre written codes such as 'EventSytem' and 'Charact
 
 The reason for the low quality of the art of this game is that I am not an artist and I found all of them on the internet.
 
+This is my first experience in making top down games and I have only used the knowledge of my previous works.
+And I can learn about the tricks of making this style of game.
+
 You can download PC_Export.rar For PC
 
 
